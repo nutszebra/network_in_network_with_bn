@@ -4,7 +4,7 @@ Implementation of NIN(Network In Network) with BN(Bathc Normalization) by chaine
 
 # Dependencies
 
-    git clone https://github.com/nutszebra/network_in_network.git
+    git clone https://github.com/nutszebra/network_in_network_with_bn.git
     cd network_in_network_with_bn
     git submodule init
     git submodule update
