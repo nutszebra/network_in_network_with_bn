@@ -167,3 +167,24 @@ class OptimizerGooglenet(Optimizer):
             lr = self.optimizer.lr * 0.96
             print('lr is changed: {} -> {}'.format(self.optimizer.lr, lr))
             self.optimizer.lr = lr
+
+
+class OptimizerNetworkInNetwork(Optimizer):
+
+    def __init__(self, model=None, lr=0.1, momentum=0.9, weight_decay=1.0e-4, schedule=(int(1.0e5 / (50000. / 128)), )):
+        super(OptimizerNetworkInNetwork, self).__init__(model)
+        optimizer = optimizers.MomentumSGD(lr, momentum)
+        weight_decay = chainer.optimizer.WeightDecay(weight_decay)
+        optimizer.setup(self.model)
+        optimizer.add_hook(weight_decay)
+        self.optimizer = optimizer
+        self.lr = lr
+        self.momentum = momentum
+        self.weight_decay = weight_decay
+        self.schedule = schedule
+
+    def __call__(self, i):
+        if i in self.schedule:
+            lr = self.optimizer.lr / 10
+            print('lr is changed: {} -> {}'.format(self.optimizer.lr, lr))
+            self.optimizer.lr = lr
